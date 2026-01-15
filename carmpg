@@ -1,0 +1,500 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 326,
+   "id": "b79c029f-d194-4624-b73f-81ba6b59a324",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import numpy as np\n",
+    "import pandas as pd"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 327,
+   "id": "a895159d-e474-4511-ab03-bd7f00c06f68",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "df = pd.read_csv('mpg.csv')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 328,
+   "id": "77995e0d-2f00-422f-bc25-5e1b05b82833",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>mpg</th>\n",
+       "      <th>cylinders</th>\n",
+       "      <th>displacement</th>\n",
+       "      <th>horsepower</th>\n",
+       "      <th>weight</th>\n",
+       "      <th>acceleration</th>\n",
+       "      <th>model_year</th>\n",
+       "      <th>origin</th>\n",
+       "      <th>name</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>18.0</td>\n",
+       "      <td>8</td>\n",
+       "      <td>307.0</td>\n",
+       "      <td>130</td>\n",
+       "      <td>3504</td>\n",
+       "      <td>12.0</td>\n",
+       "      <td>70</td>\n",
+       "      <td>1</td>\n",
+       "      <td>chevrolet chevelle malibu</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>15.0</td>\n",
+       "      <td>8</td>\n",
+       "      <td>350.0</td>\n",
+       "      <td>165</td>\n",
+       "      <td>3693</td>\n",
+       "      <td>11.5</td>\n",
+       "      <td>70</td>\n",
+       "      <td>1</td>\n",
+       "      <td>buick skylark 320</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>18.0</td>\n",
+       "      <td>8</td>\n",
+       "      <td>318.0</td>\n",
+       "      <td>150</td>\n",
+       "      <td>3436</td>\n",
+       "      <td>11.0</td>\n",
+       "      <td>70</td>\n",
+       "      <td>1</td>\n",
+       "      <td>plymouth satellite</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>16.0</td>\n",
+       "      <td>8</td>\n",
+       "      <td>304.0</td>\n",
+       "      <td>150</td>\n",
+       "      <td>3433</td>\n",
+       "      <td>12.0</td>\n",
+       "      <td>70</td>\n",
+       "      <td>1</td>\n",
+       "      <td>amc rebel sst</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>17.0</td>\n",
+       "      <td>8</td>\n",
+       "      <td>302.0</td>\n",
+       "      <td>140</td>\n",
+       "      <td>3449</td>\n",
+       "      <td>10.5</td>\n",
+       "      <td>70</td>\n",
+       "      <td>1</td>\n",
+       "      <td>ford torino</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>...</th>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>393</th>\n",
+       "      <td>27.0</td>\n",
+       "      <td>4</td>\n",
+       "      <td>140.0</td>\n",
+       "      <td>86</td>\n",
+       "      <td>2790</td>\n",
+       "      <td>15.6</td>\n",
+       "      <td>82</td>\n",
+       "      <td>1</td>\n",
+       "      <td>ford mustang gl</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>394</th>\n",
+       "      <td>44.0</td>\n",
+       "      <td>4</td>\n",
+       "      <td>97.0</td>\n",
+       "      <td>52</td>\n",
+       "      <td>2130</td>\n",
+       "      <td>24.6</td>\n",
+       "      <td>82</td>\n",
+       "      <td>2</td>\n",
+       "      <td>vw pickup</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>395</th>\n",
+       "      <td>32.0</td>\n",
+       "      <td>4</td>\n",
+       "      <td>135.0</td>\n",
+       "      <td>84</td>\n",
+       "      <td>2295</td>\n",
+       "      <td>11.6</td>\n",
+       "      <td>82</td>\n",
+       "      <td>1</td>\n",
+       "      <td>dodge rampage</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>396</th>\n",
+       "      <td>28.0</td>\n",
+       "      <td>4</td>\n",
+       "      <td>120.0</td>\n",
+       "      <td>79</td>\n",
+       "      <td>2625</td>\n",
+       "      <td>18.6</td>\n",
+       "      <td>82</td>\n",
+       "      <td>1</td>\n",
+       "      <td>ford ranger</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>397</th>\n",
+       "      <td>31.0</td>\n",
+       "      <td>4</td>\n",
+       "      <td>119.0</td>\n",
+       "      <td>82</td>\n",
+       "      <td>2720</td>\n",
+       "      <td>19.4</td>\n",
+       "      <td>82</td>\n",
+       "      <td>1</td>\n",
+       "      <td>chevy s-10</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "<p>398 rows × 9 columns</p>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "      mpg  cylinders  displacement horsepower  weight  acceleration  \\\n",
+       "0    18.0          8         307.0        130    3504          12.0   \n",
+       "1    15.0          8         350.0        165    3693          11.5   \n",
+       "2    18.0          8         318.0        150    3436          11.0   \n",
+       "3    16.0          8         304.0        150    3433          12.0   \n",
+       "4    17.0          8         302.0        140    3449          10.5   \n",
+       "..    ...        ...           ...        ...     ...           ...   \n",
+       "393  27.0          4         140.0         86    2790          15.6   \n",
+       "394  44.0          4          97.0         52    2130          24.6   \n",
+       "395  32.0          4         135.0         84    2295          11.6   \n",
+       "396  28.0          4         120.0         79    2625          18.6   \n",
+       "397  31.0          4         119.0         82    2720          19.4   \n",
+       "\n",
+       "     model_year  origin                       name  \n",
+       "0            70       1  chevrolet chevelle malibu  \n",
+       "1            70       1          buick skylark 320  \n",
+       "2            70       1         plymouth satellite  \n",
+       "3            70       1              amc rebel sst  \n",
+       "4            70       1                ford torino  \n",
+       "..          ...     ...                        ...  \n",
+       "393          82       1            ford mustang gl  \n",
+       "394          82       2                  vw pickup  \n",
+       "395          82       1              dodge rampage  \n",
+       "396          82       1                ford ranger  \n",
+       "397          82       1                 chevy s-10  \n",
+       "\n",
+       "[398 rows x 9 columns]"
+      ]
+     },
+     "execution_count": 328,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 329,
+   "id": "cf8e096a-0669-4d7e-a2e9-0444c79df13e",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "<class 'pandas.core.frame.DataFrame'>\n",
+      "RangeIndex: 398 entries, 0 to 397\n",
+      "Data columns (total 9 columns):\n",
+      " #   Column        Non-Null Count  Dtype  \n",
+      "---  ------        --------------  -----  \n",
+      " 0   mpg           398 non-null    float64\n",
+      " 1   cylinders     398 non-null    int64  \n",
+      " 2   displacement  398 non-null    float64\n",
+      " 3   horsepower    398 non-null    object \n",
+      " 4   weight        398 non-null    int64  \n",
+      " 5   acceleration  398 non-null    float64\n",
+      " 6   model_year    398 non-null    int64  \n",
+      " 7   origin        398 non-null    int64  \n",
+      " 8   name          398 non-null    object \n",
+      "dtypes: float64(3), int64(4), object(2)\n",
+      "memory usage: 28.1+ KB\n"
+     ]
+    }
+   ],
+   "source": [
+    "df.info()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 330,
+   "id": "3956c1da-2cae-4745-9f7c-5a3c64484459",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "df['horsepower'] = df['horsepower'].replace('?', '110')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 331,
+   "id": "c76f0387-e6d5-468f-bcc7-d591a741b4dc",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from sklearn.preprocessing import LabelEncoder"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 332,
+   "id": "59915a30-a9a7-4f33-9b00-c60917059c66",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "label = LabelEncoder()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 333,
+   "id": "2934e904-af7f-4e59-bc00-7def747edb7a",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "for i in df.columns:\n",
+    "    if df[i].dtype == object:\n",
+    "        df[i] = label.fit_transform(df[i])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 334,
+   "id": "3ae0d694-286b-4fc7-9de1-2445eb2df51a",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "X = df.drop('mpg', axis=1)\n",
+    "y = df['mpg']"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 335,
+   "id": "0ab066c2-e643-4361-bfb6-14e8f977a4d1",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from sklearn.model_selection import train_test_split"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 345,
+   "id": "3b2eb646-aa7a-4cd7-b5e8-cf9b34158dda",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.05, random_state=42)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 346,
+   "id": "cdd772b3-1757-408c-8f97-d003444ab4a0",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "class Reg:\n",
+    "    def __init__(self):\n",
+    "        self.b = []\n",
+    "\n",
+    "    def fit(self, X, y):\n",
+    "        self.b = np.dot(np.dot(np.linalg.inv(np.dot(X.T, X)), X.T), y)\n",
+    "\n",
+    "    def predict(self, X):\n",
+    "        y_pred = []\n",
+    "        for i in X.values:\n",
+    "            y = 0\n",
+    "            for j in range(len(self.b)):\n",
+    "                y += self.b[j] * i[j]\n",
+    "            y_pred.append(y)\n",
+    "        return y_pred"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 347,
+   "id": "5ac38922-614b-493f-843f-e4f6865df6c9",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def rmse(y_test, y_pred):\n",
+    "    y_test = y_test.values\n",
+    "    summ = 0\n",
+    "    for i in range(0, len(y_pred)):\n",
+    "        summ += (y_test[i] - y_pred[i]) ** 2\n",
+    "    return np.sqrt(summ / len(y_pred))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 358,
+   "id": "98748a69-772e-4f84-b257-91769053bf8f",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def R2(y_test, y_pred):\n",
+    "    y_avg = y_test.mean()\n",
+    "    sum_r1 = sum((y_test - y_pred) ** 2)\n",
+    "    sum_r2 = sum((y_test - y_avg) ** 2)\n",
+    "    return (1 - sum_r1 / sum_r2) "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 349,
+   "id": "abdd2df0-2d59-451c-882f-715d3497b081",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "model = Reg()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 350,
+   "id": "6c9a0733-feb1-4e77-a4ed-bd3b8354a688",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "model.fit(X_train, y_train)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 351,
+   "id": "93e36ea6-f232-4aec-9e34-b876b48ac8b8",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "y_pred = model.predict(X_test)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 352,
+   "id": "57ac12d1-d9b4-4d1e-be42-bfa2d35b8145",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "np.float64(2.7588151185865253)"
+      ]
+     },
+     "execution_count": 352,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "rmse(y_test, y_pred)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 359,
+   "id": "222bb033-56aa-4db6-9eb6-bba62f3803b5",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "0.8673742390147404"
+      ]
+     },
+     "execution_count": 359,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "R2(y_test, y_pred)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "4cac6a10-c555-4537-892a-4106fe9c9107",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.13.5"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
